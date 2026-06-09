@@ -1,17 +1,11 @@
-# Veliki data fajlovi
+# Veliki data fajlovi (preko 100 MB)
 trening+val.tar
-test_finale.zip
-yolo_trening_rezultati.zip
 
 # Dataset i podeljeni podaci
 dataset/
 train/
 val/
 test_dataset/
-
-# Trenirani modeli (preveliki)
-best.pt
-yolov8n.pt
 
 # Output folderi
 runs/
