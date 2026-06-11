@@ -1,11 +1,16 @@
-# Veliki data fajlovi (preko 100 MB)
+# Veliki data fajlovi (na Google Drive-u)
 trening+val.tar
+test_finale.zip
+yolo_trening_rezultati.zip
 
-# Dataset i podeljeni podaci
+# Dataset (generiše se iz tara)
 dataset/
 train/
 val/
 test_dataset/
+
+# Modeli (generišu se tokom treninga, auto-download)
+*.pt
 
 # Output folderi
 runs/
@@ -16,9 +21,21 @@ inference_results/
 test_results/
 exported_models/
 
-# Python cache
+# Generisani fajlovi
+data.yaml
+args.yaml
+dataset_split_info.txt
+results.csv
+
+# Stare verzije
+inteligentni_finale.py
+inteligentni_finale_original.py
+deepseek_python_20260611_f9ba9a.py
+
+# Python
 __pycache__/
 *.pyc
-
-# Virtual environment
 .venv/
+
+# IDE
+.vscode/
