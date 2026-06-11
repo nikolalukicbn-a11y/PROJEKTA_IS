@@ -2,6 +2,7 @@
 trening+val.tar
 test_finale.zip
 yolo_trening_rezultati.zip
+trening_logovi.zip
 
 # Dataset (generiše se iz tara)
 dataset/
@@ -9,23 +10,16 @@ train/
 val/
 test_dataset/
 
-# Modeli (generišu se tokom treninga, auto-download)
+# Veliki model fajlovi
 *.pt
 
-# Output folderi
-runs/
-training_logs/
-validation_viz/
-epoch_comparison/
-inference_results/
-test_results/
+# Izlazni folderi - dozvoli grafike i CSV, zabrani velike fajlove
+runs/detect/*/weights/
 exported_models/
 
 # Generisani fajlovi
 data.yaml
-args.yaml
 dataset_split_info.txt
-results.csv
 
 # Stare verzije
 inteligentni_finale.py
