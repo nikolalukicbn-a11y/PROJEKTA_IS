@@ -54,6 +54,19 @@ def find_all_models():
     return models
 
 
+def find_best_model():
+    runs_dir = Path('runs/detect')
+    if runs_dir.exists():
+        for subdir in sorted(runs_dir.iterdir(), reverse=True):
+            if subdir.is_dir():
+                best = subdir / 'weights' / 'best.pt'
+                if best.exists():
+                    return best
+    for pt in Path('.').glob('best.pt'):
+        return pt
+    return None
+
+
 def find_val_images():
     val_images = []
     val_annotations = {}
@@ -199,13 +212,19 @@ def main():
     print("=" * 60)
 
     models = find_all_models()
-    if not models:
-        print("❌ Nema pronađenih checkpoint modela!")
-        print("   Proveri da li je trening završen (02_trening.py)")
-        sys.exit(1)
-
-    print(f"📁 Pronađeno modela: {len(models)}")
     valid_models = [(e, p, f) for e, p, f in models if e is not None]
+
+    if not valid_models:
+        best = find_best_model()
+        if best:
+            print("⚠️ Nema checkpoint modela, koristim samo finalni best.pt")
+            valid_models = [('finalni', best, 'best_model')]
+        else:
+            print("❌ Nema pronađenih modela!")
+            print("   Proveri da li je trening završen (02_trening.py)")
+            sys.exit(1)
+
+    print(f"📁 Pronađeno modela: {len(valid_models)}")
     for epoch, path, folder in valid_models[:5]:
         print(f"   epoha {epoch}: {path.name}")
     if len(valid_models) > 5:
@@ -234,13 +253,15 @@ def main():
         show_comparison(model, sample_images, val_annotations, epoch_num, save_path)
         print("✅")
 
-    print("\n🎬 Kreiranje GIF animacije...")
-    create_gif()
+    if len(valid_models) >= 2:
+        print("\n🎬 Kreiranje GIF animacije...")
+        create_gif()
 
     print("\n" + "=" * 60)
     print(f"✅ SKRIPTA 4 ZAVRŠENA — Rezultati u: {OUTPUT_DIR}")
     print(f"   epoha_X_comparison.png — uporedni prikaz za svaku epohu")
-    print(f"   learning_progress.gif  — animacija napredovanja")
+    if len(valid_models) >= 2:
+        print(f"   learning_progress.gif  — animacija napredovanja")
     print("=" * 60)
 
 
